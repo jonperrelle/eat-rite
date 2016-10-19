@@ -1,0 +1,47 @@
+{
+  "name": "FoodCheck",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon --watch server -e js,html server/start.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "babel-register": "^6.16.3",
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "connect-session-sequelize": "^3.2.0",
+    "cookie-parser": "^1.4.3",
+    "crypto": "0.0.3",
+    "crypto-js": "^3.1.7",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "lodash": "^4.16.4",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
+    "path": "^0.12.7",
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
+    "react": "15.3.2",
+    "react-native": "0.35.0",
+    "react-native-camera": "^0.3.8",
+    "request": "^2.75.0",
+    "sequelize": "^3.24.4",
+    "socket-io": "0.0.0",
+    "util": "^0.10.3"
+  },
+  "jest": {
+    "preset": "jest-react-native"
+  },
+  "devDependencies": {
+    "babel-jest": "16.0.0",
+    "babel-preset-react-native": "1.9.0",
+    "jest": "16.0.1",
+    "jest-react-native": "16.0.0",
+    "react-test-renderer": "15.3.2"
+  }
+}
