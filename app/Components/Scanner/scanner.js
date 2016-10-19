@@ -3,6 +3,7 @@
 import React, { Component, PropTypes } from 'react';
 import {Text, View, TouchableHighlight} from 'react-native';
 import styles from '../styles';
+import server from '../../../server/env/development'
 const Camera = require('react-native-camera');
 let myHeaders = new Headers();
 
@@ -43,7 +44,7 @@ class Scanner extends Component {
   _onBarCodeRead(e) {
     this.setState({isLoading: true})
 
-    fetch('http://192.168.1.4:1337/api/scanner', {
+    fetch(`http://${server.route}/api/scanner`, {
       method: "POST",
       headers: myHeaders,
       mode: 'cors',
