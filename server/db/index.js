@@ -4,18 +4,17 @@ const db = require('./_db');
 module.exports = db;
 
 require('./models/user')(db);
-require('./models/settings')(db);
-require('./models/graph')(db);
-require('./models/dataset')(db);
+require('./models/food')(db);
+require('./models/product')(db);
+
 
 const User = db.model('user');
-const Settings = db.model('settings');
-const Graph = db.model('graph');
-const Dataset = db.model('dataset');
+const Food = db.model('food');
+const Product = db.model('product');
 
-User.belongsToMany(Dataset, {through : 'user_dataset'});
-Dataset.belongsToMany(User, {through : 'user_dataset'}); 
-Graph.belongsTo(Dataset);
-Graph.belongsTo(User);
-User.hasMany(Graph);
-Graph.belongsTo(Settings); 
+User.belongsToMany(Food, {through : 'user_food'});
+Food.belongsToMany(User, {through : 'user_food'});
+User.belongsToMany(Product, {through : 'user_product'});
+Product.belongsToMany(User, {through : 'user_product'});
+Product.belongsToMany(Food, {through : 'product_food'});
+Food.belongsToMany(Product, {through : 'product_food'});

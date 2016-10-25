@@ -3,6 +3,7 @@ const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const jwt = require('jsonwebtoken');
 const ENABLED_AUTH_STRATEGIES = [
     'local',
     'google',
@@ -50,6 +51,13 @@ module.exports = function (app, db) {
             .catch(done);
     });
 
+    // //generate webtoken
+
+    // app.post('/auth/\*', function(req, res, next) {
+
+
+    // });
+
     // We provide a simple GET /session in order to get session information directly.
     // This is used by the browser application (Angular) to determine if a user is
     // logged in already.
@@ -62,7 +70,7 @@ module.exports = function (app, db) {
     });
 
     // Simple /logout route.
-    app.get('/logout', function (req, res) {
+    app.get('/auth/logout', function (req, res) {
         req.logout();
         res.status(200).end();
     });

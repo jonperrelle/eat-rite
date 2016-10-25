@@ -1,67 +1,32 @@
 'use strict';
 
-import React, { Component, PropTypes } from 'react';
-import {Text, View, TouchableHighlight, Image} from 'react-native';
+import React, { Component } from 'react';
+import {Navigator, AsyncStorage, View, Text} from 'react-native';
+import TabBar from '../TabBar/TabBar';
+import NavBar from '../NavBar/NavBar';
+import Authentication from '../Authentication/authentication';
+import APIRoutes from '../API/api';
 import styles from '../styles';
-import Scanner from '../Scanner/scanner';
-import Ingredients from '../Ingredients/ingredients';
 
-let backgroundImg = require('../../../resources/background1.jpg');
+export default class Home extends Component {
 
-class Home extends Component {
+  	constructor(props) {
+    	super(props);
+    	console.log(props);
+    	this.state = {
+    		user: props.user,
+    	}
+  	}
 
-  constructor(props, context) {
-    super(props, context);
-    this.state = {}
-  }
-
-  componentDidMount() {
-  }
-
-  _onCameraPress() {
-    this.props.navigator.push({
-      title: 'Scanner',
-      component: Scanner
-    });
-  }
-
-   _onIngredientPress() {
-    this.props.navigator.push({
-      title: 'Ingredients',
-      component: Ingredients
-    });
-  }
-
-  render() {
-    return (
-      <Image source={backgroundImg} style={styles.homeContainer}>
-        <View>
-          <TouchableHighlight
-            style={styles.homeButton}
-            onPress={this._onCameraPress.bind(this)}>
-            <Text style={styles.homeButtonText}>Scan Barcode</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={styles.homeButton}
-            onPress={this._onIngredientPress.bind(this)}>
-            <Text style={styles.homeButtonText}>List of Ingredients</Text>
-          </TouchableHighlight>
-        </View>
-      </Image>
-    );
-  }
-
+  	render() {
+  		if (this.state.user) {
+	  		return (
+		      <TabBar user={this.state.user}/>
+		    );
+	  	} else {
+	  		return (
+	  			<NavBar name='' component={Authentication} title='Authentication'/>
+	  		);
+	  	}
+  	}
 }
-
-Home.propTypes = {
-  title: PropTypes.string.isRequired,
-  navigator: PropTypes.object.isRequired,
-}
-
-Home.defaultProps = {
-  title: 'Food Check App'
-}
-
-export default Home;
-
-

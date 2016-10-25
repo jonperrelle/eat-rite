@@ -16,7 +16,6 @@ router.post('/',function(req,res,next){
 		else {
 			let newBody = JSON.parse(body);
 			let product = newBody.description;
-			console.log(newBody.ingredients);
 			let ingredientsArray = utils.formatIngredients(newBody.ingredients);
 			let contentsArray = utils.checkFoodDictionary(ingredientsArray);
 			res.json({

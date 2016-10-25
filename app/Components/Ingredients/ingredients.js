@@ -23,14 +23,5 @@ class Ingredients extends Component {
   }
 }
 
-Ingredients.propTypes = {
-  title: PropTypes.string.isRequired,
-  navigator: PropTypes.object.isRequired,
-}
-
-Ingredients.defaultProps = {
-  title: 'Ingredients'
-}
-
 export default Ingredients;
 
