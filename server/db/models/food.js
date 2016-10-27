@@ -7,6 +7,7 @@ module.exports = function (db) {
     db.define('food', {
         name: {
             type: Sequelize.STRING,
+            unique: true,
             allowNull: false
         },
         aversion: {

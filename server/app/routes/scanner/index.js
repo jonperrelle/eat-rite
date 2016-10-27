@@ -17,11 +17,11 @@ router.post('/',function(req,res,next){
 			let newBody = JSON.parse(body);
 			let product = newBody.description;
 			let ingredientsArray = utils.formatIngredients(newBody.ingredients);
-			let contentsArray = utils.checkFoodDictionary(ingredientsArray);
+			console.log(ingredientsArray);
+			let contentsObj = utils.checkFoodDictionary(ingredientsArray);
 			res.json({
 				product: product,
-				ingredients: ingredientsArray,
-				contents: contentsArray
+				contents: contentsObj
 			});
 		}
 	})

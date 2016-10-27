@@ -41,11 +41,19 @@ router.post('/:userId/food', function (req, res, next) {
     aversion: req.body.food.aversion
   })
   .then( food => {
-      return food.addUser(req.requestedUser);
+    return food.addUser(req.requestedUser)
   })
-  .then( response => {
-    console.log(response[0]);
-    res.sendStatus(200);
+  .then ( response => {
+    let data = response[0][0]
+    return Food.findOne({
+      where: {
+        id: data.foodId
+      },
+    });
+  })
+  .then(food => {
+      console.log('HERE', food);
+      res.json(food);
   })
   .catch(next);
 
@@ -54,11 +62,21 @@ router.post('/:userId/food', function (req, res, next) {
 });
 
 router.delete('/:userId/food', function (req, res, next) {
-  console.log('Here', req.requestedUser);
-  Food.findById(req.body.id)
+  let foodName = req.body.food.name.toLowerCase();
+  Food.findOne({
+    where: {
+      name: foodName
+    },
+    include: [{
+      model: User,
+      through: {
+        where: {userId: req.requestedUser.id}
+      }
+    }]
+  })
     .then(function(food) {
-        console.log(food);
-        return food.destroy();
+        if (food) return food.destroy();
+        else new Error('Not in database');
     })
     .then(function(gr) {
         res.sendStatus(204);

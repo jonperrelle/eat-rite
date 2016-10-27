@@ -2,6 +2,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import {Text, View, TouchableOpacity, AlertIOS, Modal} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../styles';
 import {server} from '../../../server/env/development';
@@ -16,23 +17,23 @@ class Scanner extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       user: this.props.user,
       isLoading: false,
       modalVisible: false,
       allowed: false,
+      details: null,
       cameraType: Camera.constants.Type.back
     };
   }
 
   _setModalVisible(visible) {
-    console.log('Here', visible);
     this.setState({modalVisible: visible});
   }
 
-  _goToReasons() {
-    console.log('Here');
+  _goToDetails() {
+    this.setState({modalVisible: false});
+    Actions.scanner_details({user: this.state.user, details: this.state.details})
   }
 
   _onBarCodeRead(e) {
@@ -46,9 +47,16 @@ class Scanner extends Component {
     })
       .then( response => response.json())
       .then( jsonData => {
-        let aversions = util.checkFood(this.state.user.food, jsonData.contents);
+        console.log(jsonData);
+        let aversions = util.checkFood(this.state.user.food, jsonData);
         if (aversions.length) {
+          let details = {
+            aversions: aversions,
+            product: jsonData.product
+          };
+
           this.setState({allowed: false});
+          this.setState({details: details});
           this._setModalVisible(!this.state.modalVisible);
         } else {
           this.setState({allowed: true});
@@ -106,10 +114,10 @@ class Scanner extends Component {
             <Icon style={styles.notAllowedIcon} name="times-circle-o" size={128} />
             <Text style={styles.scannerModalText}>This is not allowed!</Text>
             <TouchableOpacity
-                style={styles.scannerModalButton}
-                onPress={this._goToReasons.bind(this)}>
-                <Text style={styles.scannerModalButtonText}>See Why</Text>
-              </TouchableOpacity>
+              style={styles.scannerModalButton}
+              onPress={this._goToDetails.bind(this)}>
+              <Text style={styles.scannerModalButtonText}>See Why</Text>
+            </TouchableOpacity>
           </View>
          </View>
         </Modal>
@@ -127,12 +135,11 @@ class Scanner extends Component {
         </View>
       )
     } else {
-        console.log(this.state.modalVisible);
       return (
-        <View style={{backgroundColor: 'transparent', flex: 1}}>
+        <View style={styles.scannerContainer}>
             <Camera
               ref="cam"
-              style={styles.container}
+              style={styles.camera}
               onBarCodeRead={this._onBarCodeRead.bind(this)}
               type={this.state.cameraType}
             >

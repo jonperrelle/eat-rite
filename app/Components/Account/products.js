@@ -4,10 +4,6 @@ import React, { Component, PropTypes } from 'react';
 import {Text, View, TouchableOpacity, Navigator, ListView} from 'react-native';
 import store from 'react-native-simple-store';
 import styles from '../styles';
-import Scanner from '../Scanner/scanner';
-import Ingredients from '../Ingredients/ingredients';
-import Authentication from '../Authentication/authentication';
-import NavBar from '../NavBar/NavBar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 

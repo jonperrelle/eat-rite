@@ -45,7 +45,7 @@ export default class App extends Component {
 	  	} else {
 
 	  		return (
-	  			<Home user={this.state.user}/>
+	  			<TabBar user={this.state.user}/>
 	  		)
 	  		// if (this.state.user) {
 		  	// 	return (

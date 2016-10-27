@@ -1,16 +1,18 @@
 'use strict';
 
 import React, { Component, PropTypes } from 'react';
-import {Text, View, TouchableHighlight, AsyncStorage} from 'react-native';
+import {Text, Dimensions, View, TouchableHighlight, AsyncStorage, ActivityIndicator} from 'react-native';
 import store from 'react-native-simple-store';
+import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
-import Account from '../Account/accountHome';
 import APIRoutes from '../API/api';
 import {server} from '../../../server/env/development';
+
 const _ = require('lodash');
 const t = require('tcomb-form-native');
 const stylesheet = _.cloneDeep(t.form.Form.stylesheet);
 let myHeaders = new Headers();
+let windowWidth = Dimensions.get('window').width;
 
 myHeaders.append('Content-Type', 'application/json');
 
@@ -22,7 +24,14 @@ let SignupForm = t.struct({
   password: t.String,
 });
 
-stylesheet.textbox.normal.width = 200;
+stylesheet.textbox.normal.width = windowWidth * .5;
+stylesheet.textbox.normal.minWidth = 200;
+stylesheet.textbox.normal.maxWidth = 400;
+stylesheet.textbox.normal.borderRadius = 0;
+stylesheet.textbox.normal.borderColor = '#48afdb';
+stylesheet.textbox.normal.fontSize = 18;
+stylesheet.textbox.normal.height = 50;
+stylesheet.textbox.normal.color = '#48afdb';
 
 let options = {
   auto: 'placeholders',
@@ -79,17 +88,12 @@ class Signup extends Component {
     })
     .then( response => response.json())
     .then( jsonData => {
+      console.log(jsonData);
       //modal to Check mark with successful, then back to home
       return APIRoutes.setUserStorage(jsonData);
     })
     .then( (userInfo) => {
-      console.log('Here', userInfo);
-      this.props.navigator.push({
-        name: 'Account',
-        title: 'Account',
-        component: Account,
-        user: userInfo,
-      });
+      Actions.TabBar({user: userInfo, type: 'reset', hideBackImage: true});
     })
     .catch( error => console.log('Fetch error ' + error) );
 
@@ -99,8 +103,12 @@ class Signup extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <View style={styles.container}>
-          <Text>Loading...</Text>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator
+            animating={true}
+            color="#48afdb"
+            size="large"
+            />
         </View>
       )
     } else {
@@ -125,15 +133,6 @@ class Signup extends Component {
     }
   }
 
-}
-
-Signup.propTypes = {
-  title: PropTypes.string.isRequired,
-  navigator: PropTypes.object.isRequired,
-}
-
-Signup.defaultProps = {
-  title: 'Signup'
 }
 
 export default Signup;

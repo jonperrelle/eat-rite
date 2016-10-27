@@ -30,7 +30,7 @@ module.exports = {
 
 	async setUserStorage (response) {
 		try {
-			let user = await AsyncStorage.setItem('USER', JSON.stringify(response.user));
+			await AsyncStorage.setItem('USER', JSON.stringify(response.user));
 			await AsyncStorage.setItem('TOKEN', JSON.stringify(response.token));
 			return response.user;
 		} catch (error) {
@@ -66,10 +66,12 @@ module.exports = {
 		        body: JSON.stringify({food: food})
 		    })
 	    })
-	    .then( response => {
-	    	user.food.push(food);
+	    .then( response => response.json())
+	    .then( jsonData => {
+	    	user.food.push(jsonData);
 	    	return AsyncStorage.mergeItem('USER', JSON.stringify(user));
 	    })
+
 	    .catch( error => console.log('Fetch error ' + error) );
 	},
 
@@ -88,8 +90,14 @@ module.exports = {
 		    });
 	    })
 	    .then( response => {
-	    	user.food.pop();
-	    	return AsyncStorage.mergeItem('USER', JSON.stringify(user));
+	    	if (response.status === 204) {
+	    		user.food = user.food.filter(f => {
+	    			return f !== food;
+	    		})
+	    		return AsyncStorage.mergeItem('USER', JSON.stringify(user));
+	    	} else {
+	    		return new Error('error deleting food');
+	    	}
 	    })
 	    .catch( error => console.log('Fetch error ' + error) );
 

@@ -1,17 +1,17 @@
 'use strict';
 
 import React, { Component, PropTypes } from 'react';
-import {Text, View, TouchableHighlight, AsyncStorage, AlertIOS} from 'react-native';
-import store from 'react-native-simple-store';
+import {Text, Dimensions, View, TouchableHighlight, AsyncStorage, AlertIOS, ActivityIndicator} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
-import Account from '../Account/accountHome';
-import Home from '../Home/home';
-import APIRputes from '../API/api';
+import APIRoutes from '../API/api';
 import {server} from '../../../server/env/development';
+
 const _ = require('lodash');
 const t = require('tcomb-form-native');
 const stylesheet = _.cloneDeep(t.form.Form.stylesheet);
 let myHeaders = new Headers();
+let windowWidth = Dimensions.get('window').width;
 
 myHeaders.append('Content-Type', 'application/json');
 
@@ -21,7 +21,14 @@ let LoginForm = t.struct({
   password: t.String,
 });
 
-stylesheet.textbox.normal.width = 200;
+stylesheet.textbox.normal.width = windowWidth * .5;
+stylesheet.textbox.normal.minWidth = 200;
+stylesheet.textbox.normal.maxWidth = 400;
+stylesheet.textbox.normal.borderRadius = 0;
+stylesheet.textbox.normal.borderColor = '#48afdb';
+stylesheet.textbox.normal.fontSize = 18;
+stylesheet.textbox.normal.height = 50;
+stylesheet.textbox.normal.color = '#48afdb';
 
 let options = {
   auto: 'placeholders',
@@ -63,15 +70,10 @@ class Login extends Component {
     .then( response => response.json())
     .then( jsonData => {
       //modal to Check mark with successful, then back to home
-      return APIRputes.setUserStorage(jsonData);
+      return APIRoutes.setUserStorage(jsonData);
     })
     .then( (userInfo) => {
-      this.props.navigator.push({
-        name: 'My Account',
-        title: 'Home',
-        component: Home,
-        user: userInfo,
-      });
+      Actions.TabBar({user: userInfo, type: 'reset', hideBackImage: true});
     })
     .catch( error => {
       AlertIOS.alert(
@@ -90,14 +92,18 @@ class Login extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <View style={styles.container}>
-          <Text>Loading...</Text>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator
+            animating={true}
+            color="#48afdb"
+            size="large"
+            />
         </View>
       )
     } else {
       return (
         <View style={styles.container}>
-          <Text style={styles.authSubHeading}>Login</Text>
+          <Text style={styles.authSubHeading}>Enter Your Credentials</Text>
           <Form
             ref="form"
             type={LoginForm}
@@ -116,15 +122,6 @@ class Login extends Component {
     }
   }
 
-}
-
-Login.propTypes = {
-  title: PropTypes.string.isRequired,
-  navigator: PropTypes.object.isRequired,
-}
-
-Login.defaultProps = {
-  title: 'Login'
 }
 
 export default Login;

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../styles';
 import Scanner from '../Scanner/scanner';
 import Ingredients from '../Ingredients/ingredients';
+import CustomNavBar from './CustomNavBar';
 
 
 export default class NavBar extends Component {
@@ -19,11 +20,13 @@ export default class NavBar extends Component {
         navigator={navigator}
         buttonLogic={route.buttonLogic}
         user={route.user}
+        details={route.details}
         {...route.passProps}/>
     );
   }
 
   render() {
+      console.log('Here');
       return (
         <Navigator
           initialRoute={{
@@ -32,11 +35,12 @@ export default class NavBar extends Component {
             title: this.props.title,
             buttonLogic: this.props.buttonLogic || undefined,
             user: this.props.user,
+            details: this.props.details
           }}
           style={styles.wrapper}
-          renderScene={this.renderScene}
+          renderScene={this.renderScene.bind(this)}
           navigationBar={<Navigator.NavigationBar
-            style={styles.navBar}
+            style={styles.navBarDisplay}
             routeMapper={{
               LeftButton(route, navigator, index, navState) {
                 if (index > 0) {
@@ -62,7 +66,7 @@ export default class NavBar extends Component {
                 return <Text style={styles.navBarText}>{route.name}</Text>;
               }
             }}
-          />}/>
+        />}/>
         );
     }
 }

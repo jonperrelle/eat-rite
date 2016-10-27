@@ -38,11 +38,13 @@ module.exports = {
 	},
 
 	checkFoodDictionary: function(array) {
-		let contentsArray = []
+		let contentsObj = {}
 		array.forEach(i => {
-			if (foodDict[i]) contentsArray = contentsArray.concat(foodDict[i]);
+			if (foodDict[i]) {
+				contentsObj[i] = foodDict[i];
+			}
 		});
-		return contentsArray;
+		return contentsObj;
 	}
 
 }

@@ -2,9 +2,8 @@
 
 import React, { Component, PropTypes } from 'react';
 import {Text, View, TouchableHighlight, TouchableOpacity, Image} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import styles from '../styles';
-import Signup from './signup';
-import Login from './login';
 
 let backgroundImg = require('../../../resources/background1.jpg');
 
@@ -20,27 +19,19 @@ class Authentication extends Component {
   }
 
   _onCreateAccountPress() {
-    this.props.navigator.push({
-      name: 'Signup',
-      title: 'Signup',
-      component: Signup,
-    });
+    Actions.Signup();
   }
 
    _onLoginPress() {
-    this.props.navigator.push({
-      name: 'Login',
-      title: 'Login',
-      component: Login,
-    });
+    Actions.Login();
   }
 
   render() {
     return (
       <Image source={backgroundImg} style={styles.bgImageContainer}>
         <View style={styles.authContainer}>
-          <Text style={styles.authHeading}>Food Check</Text>
-          <Text style={styles.authSubHeading}>Create an account to make sure you can eat the food products you want to buy.</Text>
+          <Text style={styles.authHeading}>EatRite</Text>
+          <Text style={styles.authSubHeading}>Make sure that you can eat the food you want.</Text>
           <TouchableHighlight
             style={styles.authButton}
             onPress={this._onCreateAccountPress.bind(this)}>
@@ -62,14 +53,14 @@ class Authentication extends Component {
 
 }
 
-Authentication.propTypes = {
-  title: PropTypes.string.isRequired,
-  navigator: PropTypes.object.isRequired,
-}
+// Authentication.propTypes = {
+//   title: PropTypes.string.isRequired,
+//   navigator: PropTypes.object.isRequired,
+// }
 
-Authentication.defaultProps = {
-  title: 'Authentication'
-}
+// Authentication.defaultProps = {
+//   title: 'Authentication'
+// }
 
 export default Authentication;
 

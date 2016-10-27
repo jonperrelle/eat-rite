@@ -2,14 +2,9 @@
 
 import React, { Component, PropTypes } from 'react';
 import {Text, View, TouchableOpacity, Navigator, ListView} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import store from 'react-native-simple-store';
 import styles from '../styles';
-import Scanner from '../Scanner/scanner';
-import Ingredients from '../Ingredients/ingredients';
-import Authentication from '../Authentication/authentication';
-import Home from '../Home/home';
-import NavBar from '../NavBar/NavBar';
-import TabBar from '../TabBar/TabBar';
 import APIRoutes from '../API/api';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -33,12 +28,7 @@ class Settings extends Component {
      APIRoutes.logoutUser()
       .then( () => {
         //modal to show that logout was successful
-        this.props.navigator.push({
-          name: '',
-          title: 'Home',
-          component: Home,
-          user: null
-        });
+        Actions.Authentication();
       });
   }
 

@@ -19,12 +19,13 @@ export default StyleSheet.create({
   authContainer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#48afdb',
+    backgroundColor: '#F5F5F5',
     marginTop: windowHeight * 2/10,
+
   },
   authHeading: {
     fontSize: 40,
-    color: '#F5F5F5',
+    color: '#48afdb',
     fontFamily: 'PingFang SC',
     fontWeight: "900",
     marginTop: 20,
@@ -33,77 +34,87 @@ export default StyleSheet.create({
    authButton: {
     height: 70,
     width: 200,
-    borderColor: '#F5F5F5',
-    borderRadius: 35,
+    borderColor: '#48afdb',
     borderWidth: 2,
     margin: 10,
     justifyContent: 'center'
   },
   authButtonText: {
     textAlign: 'center',
-    color: '#F5F5F5',
+    color: '#48afdb',
     marginBottom: 5,
-    fontSize: 20,
+    fontSize: 16,
     marginHorizontal: 5,
   },
   authSubHeading: {
     textAlign: 'center',
     width: windowWidth * .8,
-    fontSize: 16,
-    color: '#F5F5F5',
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#48afdb',
     fontFamily: 'PingFang SC',
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 10,
   },
-  container: {
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#48afdb',
+    backgroundColor: '#F5F5F5',
   },
-  scannerContainer: {
-    backgroundColor: 'transparent'
+  container: {
+    flex: 1,
+    marginTop: 60,
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+  },
+  camera: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  tabBar: {
+    backgroundColor: '#F5F5F5',
+    height: 60,
+  },
+  tabBarContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  tabBarIcon: {
+    textAlign: 'center',
+    marginBottom: 3
+  },
+  tabBarText: {
+    fontSize: 14,
   },
   navBar: {
     backgroundColor: '#F5F5F5',
-  },
-  navBarView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    borderBottomWidth: 0,
   },
   navBarText: {
     color: '#48afdb',
     fontSize: 20,
-  },
-  navIcon: {
-    color: '#48afdb',
-    paddingHorizontal: 5,
     marginTop: -5,
   },
-  anchor: {
-    marginTop: 10,
-  },
-  anchorText: {
-    fontSize: 14,
-    color: '#FF5722',
-    fontFamily: 'PingFang SC',
-    textDecorationLine: 'underline',
+  navBarIcon: {
+    tintColor: '#48afdb',
+    paddingHorizontal: 5,
+    marginTop: -5,
   },
   accountContainer: {
     flex: 1,
     backgroundColor: '#48afdb',
-    paddingBottom: 40,
+    paddingBottom: 60,
   },
   rowContainer: {
     flex: 1,
-    marginTop: 100,
+    marginTop: 80,
     marginHorizontal: 20,
   },
   accountRow: {
     justifyContent: 'center',
-    padding: 20,
+    paddingVertical: 30,
     backgroundColor: '#F5F5F5',
-    borderRadius: 10,
   },
   rowText: {
     textAlign: 'center',
@@ -113,14 +124,19 @@ export default StyleSheet.create({
   },
   accountRowSeparator: {
     backgroundColor: '#48afdb',
-    height: 10,
+    height: 2,
   },
   foodRow: {
     justifyContent: 'center',
-    padding: 10,
+    padding: 15,
     backgroundColor: '#F5F5F5',
-    borderRadius: 10,
     flexDirection: 'row',
+  },
+  foodRowHeader: {
+    fontSize: 24,
+    color: '#F5F5F5',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   foodRowText: {
     fontSize: 20,
@@ -129,7 +145,16 @@ export default StyleSheet.create({
   },
   foodRowSeparator: {
     backgroundColor: '#48afdb',
-    height: 5,
+    height: 1,
+  },
+  foodSectionHeaderContainer: {
+    backgroundColor: '#dddddd',
+  },
+  foodSectionHeaderText: {
+    padding: 8,
+    color: '#48afdb',
+    fontWeight: '700',
+    fontSize: 24,
   },
   plusIcon: {
     color: 'green',
@@ -177,15 +202,14 @@ export default StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    padding: 8,
-    backgroundColor: '#48afdb',
-    padding: 20,
+    padding: 30,
+    backgroundColor: '#F5F5F5'
   },
   footerButton: {
     height: 50,
     borderColor: '#48afdb',
     borderWidth: 2,
-    borderRadius: 25,
+    marginHorizontal: 20,
     justifyContent: 'center',
   },
   buttonText: {
@@ -213,14 +237,75 @@ export default StyleSheet.create({
   },
   addFoodModalInnerContainer: {
     borderRadius: 10,
-    alignItems: 'center',
     backgroundColor: '#F5F5F5',
-    padding: 20,
+    padding: 10,
+  },
+  addFoodFormContainer: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  addFoodButton: {
+    height: 50,
+    borderColor: '#48afdb',
+    borderWidth: 2,
+    marginHorizontal: 40,
+    justifyContent: 'center',
+    marginVertical: 15,
   },
   scannerInnerContainer: {
     borderRadius: 10,
     backgroundColor: '#F5F5F5',
     padding: 10,
+  },
+  scannerContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  aversionDetailsContainer: {
+    flex: 1,
+    backgroundColor: '#48afdb',
+    paddingBottom: 40,
+  },
+  aversionDetailsRowContainer: {
+    flex: 1,
+    marginTop: 80,
+    marginHorizontal: 20,
+  },
+  aversionDetailsHeadingContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCCCCC',
+    backgroundColor: '#F5F5F5'
+  },
+  aversionDetailsHeading: {
+    marginTop: 5,
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#48afdb',
+    textAlign: 'center',
+  },
+  aversionDetailsSubHeading: {
+    fontSize: 18,
+    textAlign: 'center',
+    paddingTop: 5,
+    paddingBottom: 10,
+  },
+  aversionDetailsRow: {
+    padding: 10,
+    backgroundColor: '#F5F5F5'
+  },
+  aversionDetailsRowHeading: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#48afdb',
+    paddingVertical: 5,
+    textAlign: 'center',
+  },
+  aversionDetailsRowText: {
+    fontSize: 14,
+  },
+  aversionDetailsSeparator: {
+    backgroundColor: '#CCCCCC',
+    height: 1,
   }
 
 
