@@ -140,7 +140,6 @@ export default StyleSheet.create({
   },
   foodRowText: {
     fontSize: 20,
-    flex: 1,
     color: '#48afdb',
   },
   foodRowSeparator: {
@@ -202,13 +201,12 @@ export default StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    padding: 30,
-    backgroundColor: '#F5F5F5'
+    padding: 10,
+    backgroundColor: '#48afdb'
   },
   footerButton: {
-    height: 50,
-    borderColor: '#48afdb',
-    borderWidth: 2,
+    height: 70,
+    backgroundColor: '#F5F5F5',
     marginHorizontal: 20,
     justifyContent: 'center',
   },
@@ -306,7 +304,42 @@ export default StyleSheet.create({
   aversionDetailsSeparator: {
     backgroundColor: '#CCCCCC',
     height: 1,
-  }
+  },
+  foodModalButtonsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  editFoodButton: {
+    flex: .5,
+    height: 50,
+    borderColor: '#76db9e',
+    borderWidth: 2,
+    marginHorizontal: 10,
+    justifyContent: 'center',
+    marginVertical: 15,
+  },
+  removeFoodButton: {
+    flex: .5,
+    height: 50,
+    borderColor: '#f25e5e',
+    borderWidth: 2,
+    marginHorizontal: 10,
+    justifyContent: 'center',
+    marginVertical: 15,
+  },
+  editButtonText: {
+    fontSize: 16,
+    color: '#76db9e',
+    textAlign: 'center',
+    marginHorizontal: 20,
+  },
+  removeButtonText: {
+    fontSize: 16,
+    color: '#f25e5e',
+    textAlign: 'center',
+    marginHorizontal: 20,
+  },
 
 
 });

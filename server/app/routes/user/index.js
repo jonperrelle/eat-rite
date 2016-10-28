@@ -36,46 +36,53 @@ router.param('userId', function (req, res, next, id) {
 router.post('/:userId/food', function (req, res, next) {
   console.log(req.token);
   let foodName = req.body.food.name.trim().toLowerCase();
-  Food.create({
-    name: foodName,
-    aversion: req.body.food.aversion
+  Food.findOrCreate({
+    where: {
+      name: foodName,
+      aversion: req.body.food.aversion
+    }
   })
-  .then( food => {
+  .spread( (food, created) => {
     return food.addUser(req.requestedUser)
-  })
-  .then ( response => {
-    let data = response[0][0]
-    return Food.findOne({
-      where: {
-        id: data.foodId
-      },
-    });
-  })
-  .then(food => {
-      console.log('HERE', food);
-      res.json(food);
+      .then( () => res.json(food))
+      .catch(next);
   })
   .catch(next);
+});
 
-
-
+router.put('/:userId/food', function (req, res, next) {
+  console.log(req.token);
+  let foodName = req.body.food.name.trim().toLowerCase();
+  Food.findById(req.body.id)
+  .then(food => {
+    return food.removeUser(req.requestedUser)
+  })
+  .then( (data) => {
+    console.log('Here', data);
+    return Food.findOrCreate({
+      where: {
+        name: foodName,
+        aversion: req.body.food.aversion
+      }
+    });
+  })
+  .spread( (food, created) => {
+    return food.addUser(req.requestedUser)
+      .then( () => res.json(food))
+      .catch(next);
+  })
+  .catch(next);
 });
 
 router.delete('/:userId/food', function (req, res, next) {
   let foodName = req.body.food.name.toLowerCase();
   Food.findOne({
     where: {
-      name: foodName
-    },
-    include: [{
-      model: User,
-      through: {
-        where: {userId: req.requestedUser.id}
-      }
-    }]
+      id: req.body.food.id
+    }
   })
     .then(function(food) {
-        if (food) return food.destroy();
+        if (food) return food.removeUser(req.requestedUser);
         else new Error('Not in database');
     })
     .then(function(gr) {

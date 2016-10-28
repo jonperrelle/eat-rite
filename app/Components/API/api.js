@@ -75,6 +75,29 @@ module.exports = {
 	    .catch( error => console.log('Fetch error ' + error) );
 	},
 
+	editFood (user, newFood, oldFood) {
+
+		return AsyncStorage.getItem('TOKEN')
+		.then( token => {
+			myHeaders.append('Authorization', `Bearer ${token}`)
+			return fetch(`http://${server.route}/api/users/${user.id}/food`, {
+		        method: "PUT",
+		        headers: myHeaders,
+		        mode: 'cors',
+		        cache: 'default',
+		        body: JSON.stringify({food: newFood, id: oldFood.id})
+		    })
+	    })
+	    .then( response => response.json())
+	    .then( jsonData => {
+	    	user.food = user.food.filter( f => f.id !== oldFood.id );
+	    	user.food.push(jsonData);
+	    	return AsyncStorage.mergeItem('USER', JSON.stringify(user));
+	    })
+
+	    .catch( error => console.log('Fetch error ' + error) );
+	},
+
 	removeFood (user, food) {
 
 		return AsyncStorage.getItem('TOKEN')
@@ -92,7 +115,7 @@ module.exports = {
 	    .then( response => {
 	    	if (response.status === 204) {
 	    		user.food = user.food.filter(f => {
-	    			return f !== food;
+	    			return f.id !== food.id;
 	    		})
 	    		return AsyncStorage.mergeItem('USER', JSON.stringify(user));
 	    	} else {

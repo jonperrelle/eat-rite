@@ -23,8 +23,8 @@ class Account extends Component {
   _getRowData () {
 
     return [
-    {title: 'Foods', name:'Food Aversions'},
-    {title: 'Products', name: 'Product Aversions'},
+    {title: 'Foods', name:'Food Restrictions'},
+    {title: 'Products', name: 'Product Restrictions'},
     {title: 'Settings', name: 'Settings'}
     ];
   }
